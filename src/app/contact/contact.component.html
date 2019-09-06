@@ -35,4 +35,45 @@
             </div>
         </div>
     </div>
+    <div fxFlex fxFlexOffset="20px" class="form-size">
+      <h3>Send us your Feedback</h3>
+      <form novalidate [formGroup]="feedbackForm" #fform="ngForm" (ngSubmit)="onSubmit()">
+        <mat-form-field class="half-width">
+          <input matInput formControlName="firstName" placeholder="First Name" type="text" required>
+          <mat-error *ngIf="formErrors.firstName">{{formErrors.firstName}}</mat-error>
+        </mat-form-field>
+        <mat-form-field class="half-width">
+          <input matInput formControlName="lastName" placeholder="Last Name" type="text" required>
+          <mat-error *ngIf="formErrors.lastName">{{formErrors.lastName}}</mat-error>
+        </mat-form-field>
+        <mat-form-field class="half-width">
+          <input matInput formControlName="phoneNumber" placeholder="Tel. Number" type="tel" pattern="[0-9]*" required>
+          <mat-error *ngIf="formErrors.phoneNumber">{{formErrors.phoneNumber}}</mat-error>
+        </mat-form-field>
+        <mat-form-field class="half-width">
+          <input matInput formControlName="email" placeholder="Email" type="email" email required>
+          <mat-error *ngIf="formErrors.email">{{formErrors.email}}</mat-error>
+        </mat-form-field>
+        <table class="form-size">
+          <td>
+            <mat-slide-toggle formControlName="agree">May we contact you?</mat-slide-toggle>
+          </td>
+          <td>
+            <mat-select placeholder='How?' formControlName="contactType">
+                <mat-option *ngFor="let type of contactType" [value]="type">
+                  {{ type }}
+                </mat-option>
+            </mat-select>
+          </td>
+        </table>
+        <p>
+          <mat-form-field class="half-width">
+            <textarea matInput formControlName="message" placeholder="Your Feedback" rows="12"></textarea>
+          </mat-form-field>
+        </p>
+        <button type="submit" class="background-primary text-floral-white"
+        [disabled]="feedbackForm.invalid">
+          Submit</button>
+      </form>
+    </div>
 </div>

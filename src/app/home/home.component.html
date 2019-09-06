@@ -4,7 +4,7 @@
      fxLayout.sm="column"
      fxLayout.xs="column"
      fxLayoutAlign.gt-md="space-around center"
-     fxLayoutGap="10px">
+     fxLayoutGap="10px" *ngIf="dish && promotion && leader">
 
     <mat-card *ngIf="dish" fxFlex="0 0 33%">
         <mat-card-header>
@@ -44,5 +44,7 @@
         </p>
       </mat-card-content>
     </mat-card>
-
+</div>
+<div [hidden]="leader && dish && promotion">
+  <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
 </div>

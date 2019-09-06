@@ -18,7 +18,8 @@ export class LeaderdetailComponent implements OnInit {
 
   ngOnInit() {
     const id = this.route.snapshot.params.id;
-    this.leader = this.leaderService.getLeader(id);
+    this.leaderService.getLeader(id)
+      .subscribe(leader => this.leader = leader);
   }
 
   goBack(): void {

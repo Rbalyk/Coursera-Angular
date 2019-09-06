@@ -15,7 +15,7 @@ export const DISHES: Dish[] = [
             {
                 rating: 5,
                 comment: 'Imagine all the eatables, living in conFusion!',
-                author: 'John Lemon',
+                author: 'Roman Balyk',
                 date: '2012-10-16T17:57:28.556094Z'
             },
             {
@@ -87,7 +87,7 @@ export const DISHES: Dish[] = [
         ]
     },
     {
-        id: '2',
+        id: '3',
         name: 'Vadonut',
         image: '/assets/images/vadonut.png',
         category: 'appetizer',
@@ -129,7 +129,7 @@ export const DISHES: Dish[] = [
         ]
     },
     {
-        id: '3',
+        id: '4',
         name: 'ElaiCheese Cake',
         image: '/assets/images/elaicheesecake.png',
         category: 'dessert',
@@ -170,4 +170,4 @@ export const DISHES: Dish[] = [
             }
         ]
     }
-]
+];
