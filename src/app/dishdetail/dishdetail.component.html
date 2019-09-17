@@ -4,17 +4,18 @@
      fxLayout.xs="column"
      fxLayoutAlign.gt-md="start"
      fxLayoutGap="10px"
-     fxLayoutGap.xs="0">
+     fxLayoutGap.xs="0"
+     *ngIf="dish">
 
   <div fxFlex="40">
-    <div fxFlex *ngIf="dish">
+    <div fxFlex >
       <mat-card>
         <mat-card-header>
           <mat-card-title>
             <h3>{{dish.name | uppercase}}</h3>
           </mat-card-title>
         </mat-card-header>
-        <img mat-card-image src="{{dish.image}}" alt="{{dish.name}}">
+        <img mat-card-image src="{{BaseURL + dish.image}}" alt="{{dish.name}}">
         <mat-card-content>
           <p>{{dish.description}}</p>
         </mat-card-content>
@@ -41,7 +42,7 @@
         </mat-card-header>
         <mat-card-content>
           <mat-list>
-            <mat-list-item *ngFor="let comment of comment">
+            <mat-list-item *ngFor="let comment of comments">
               <p mat-line>{{comment.comment}}</p>
               <p mat-line>{{comment.rating}} Stars</p>
               <p mat-line>
@@ -86,3 +87,11 @@
   </div>
 
 </div>
+<div [hidden]="dish || errMess">
+  <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+</div>
+<div fxFlex *ngIf="errMess">
+  <h2>Error</h2>
+  <h4>{{errMess}}</h4>
+</div>
+

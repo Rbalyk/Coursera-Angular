@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { Leader} from '../shared/leader';
@@ -14,7 +14,8 @@ export class LeaderdetailComponent implements OnInit {
 
   constructor(private leaderService: LeaderService,
               private route: ActivatedRoute,
-              private location: Location) { }
+              private location: Location,
+              @Inject('BaseURL') private BaseURL) { }
 
   ngOnInit() {
     const id = this.route.snapshot.params.id;
