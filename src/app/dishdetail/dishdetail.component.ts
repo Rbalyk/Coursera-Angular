@@ -1,16 +1,20 @@
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
-import { Params, ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
-import { Dish } from '../shared/dish';
-import { DishService } from '../services/dish.service';
-import { switchMap } from 'rxjs/operators';
-import { Comment } from '../shared/comment';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {Component, OnInit, ViewChild, Inject} from '@angular/core';
+import {Params, ActivatedRoute} from '@angular/router';
+import {Location} from '@angular/common';
+import {Dish} from '../shared/dish';
+import {DishService} from '../services/dish.service';
+import {switchMap} from 'rxjs/operators';
+import {Comment} from '../shared/comment';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { visibility } from '../animations/app.animation';
 
 @Component({
   selector: 'app-dishdetail',
   templateUrl: './dishdetail.component.html',
-  styleUrls: ['./dishdetail.component.scss']
+  styleUrls: ['./dishdetail.component.scss'],
+  animations: [
+    visibility()
+  ]
 })
 export class DishdetailComponent implements OnInit {
   dish: Dish;
@@ -31,6 +35,7 @@ export class DishdetailComponent implements OnInit {
   value = 5;
   tickIntervalNumber = 1;
   dishCopy: Dish;
+  visibility = 'shown';
 
   get tickInterval(): number | 'auto' {
     return this.showTicks ? (this.autoTicks ? 'auto' : this.tickIntervalNumber) : 0;
@@ -78,14 +83,15 @@ export class DishdetailComponent implements OnInit {
 
   ngOnInit() {
     this.dishService.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
-    this.route.params.pipe(switchMap((params: Params) => this.dishService.getDish(params.id)))
+    this.route.params.pipe(switchMap((params: Params) => { this.visibility = 'hidden'; return this.dishService.getDish(+params['id']); }))
       .subscribe(
         dish => {
-                this.dish = dish;
-                this.dishCopy = dish;
-                this.setPrevNext(dish.id);
-                this.comments = dish.comments;
-              },
+          this.dish = dish;
+          this.dishCopy = dish;
+          this.setPrevNext(dish.id);
+          this.visibility = 'shown';
+          this.comments = dish.comments;
+        },
         errorMessage => this.errMess = errorMessage as any);
   }
 
@@ -101,9 +107,14 @@ export class DishdetailComponent implements OnInit {
     this.dishCopy.comments.push(this.comment);
     this.dishService.putDish(this.dishCopy)
       .subscribe(dish => {
-          this.dish = dish; this.dishCopy = dish;
+          this.dish = dish;
+          this.dishCopy = dish;
         },
-        errorMessage => { this.dish = null; this.dishCopy = null; this.errMess = errorMessage as any; });
+        errorMessage => {
+          this.dish = null;
+          this.dishCopy = null;
+          this.errMess = errorMessage as any;
+        });
     this.commentForm.reset();
   }
 

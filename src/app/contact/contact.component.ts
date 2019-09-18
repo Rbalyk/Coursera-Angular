@@ -62,6 +62,7 @@ export class ContactComponent {
 
   onSubmit() {
     console.log(this.feedbackForm.value);
+    this.feedbackForm.reset();
   }
 
   onValueChanged(data?: any) {
