@@ -14,9 +14,12 @@ import { LeaderService } from '../services/leader.service';
 export class HomeComponent implements OnInit {
 
   dish: Dish;
-  dishErrMess: string;
   promotion: Promotion;
   leader: Leader;
+  DishErrorMessage: string;
+  LeaderErrorMessage: string;
+  PromotionErrorMessage: string;
+
 
   constructor(private dishservice: DishService,
               private promotionservice: PromotionService,
@@ -27,17 +30,17 @@ export class HomeComponent implements OnInit {
     this.dishservice.getFeaturedDish()
       .subscribe(
         dish => this.dish = dish,
-        errorMessage => this.dishErrMess = errorMessage as any
+        errorMessage => this.DishErrorMessage = errorMessage as any
       );
     this.promotionservice.getFeaturedPromotion()
       .subscribe(
         promotion => this.promotion = promotion,
-        errorMessage => this.dishErrMess = errorMessage as any
+        errorMessage => this.PromotionErrorMessage = errorMessage as any
       );
     this.leaderService.getFeaturedLeader()
       .subscribe(
         leader => this.leader = leader,
-        errorMessage => this.dishErrMess = errorMessage as any
+        errorMessage => this.LeaderErrorMessage = errorMessage as any
       );
   }
 
